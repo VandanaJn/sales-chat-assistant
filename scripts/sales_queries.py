@@ -12,3 +12,9 @@ def get_monthly_sales(df:DataFrame):
     df["ORDERDATE"]=pd.to_datetime(df["ORDERDATE"])
     data= df.groupby(df["ORDERDATE"].dt.to_period("M"))["SALES"].sum()
     return data
+
+def get_sales_for_customer(df, customer_name):
+    return df[df["CUSTOMERNAME"].str.contains(customer_name, case=False)]["SALES"].sum()
+
+def get_large_deals(df, threshold=10000):
+    return df[df["SALES"] > threshold]
